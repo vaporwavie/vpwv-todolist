@@ -19,8 +19,9 @@
 
         .closeButton {
             position: absolute;
-            right: -4pt;
-            top: -4pt;
+            right: 1pt;
+            top: -1pt;
+            cursor: pointer;
         }
     }
 }
