@@ -1,4 +1,13 @@
 import * as React from "react";
+import Button from "./Button";
+import Dialog from "./Dialog";
+
+enum Status {
+    Closed,
+    Prompt,
+    Confirm,
+    Alert,
+}
 
 export interface Task {
     text: string;
@@ -7,6 +16,10 @@ export interface Task {
 
 interface State {
     tasks: Task[];
+    dialogText: string;
+    dialogValue: string;
+    isDialogOpen: Status;
+    dialogCallback: (v: string) => any;
 }
 
 interface Props {
@@ -14,7 +27,22 @@ interface Props {
 }
 
 export default class App extends React.Component<Props, State> {
-    state: State = { tasks: [] };
+    state: State = {
+        tasks: [],
+        dialogText: null,
+        dialogValue: null,
+        dialogCallback: null,
+        isDialogOpen: Status.Closed,
+    };
+
+    prompt(dialogText: string, dialogCallback: (v: string) => any) {
+        this.setState({
+            dialogText,
+            dialogCallback,
+            dialogValue: "",
+            isDialogOpen: Status.Prompt
+        } as any);
+    }
 
     onCreateTask(text: string) {
         this.setState({
@@ -50,6 +78,9 @@ export default class App extends React.Component<Props, State> {
     }
 
     deleteTask(index: number) {
+        if (!confirm("Você realmente deseja deletar a tarefa?"))
+            return;
+
         let tasks = [...this.state.tasks];
 
         tasks.splice(index, 1);
@@ -64,24 +95,88 @@ export default class App extends React.Component<Props, State> {
         return (
             <div>
                 <h2>{this.props.username}'s A E S T H E T I C S todolist</h2>
-                <h4>And you must respect it.</h4>
+                <h4>Totally</h4>
 
-                <p>Here is what you  can do</p>
-                <button onClick={() => this.onCreateTask(prompt("Digite a tarefa a ser feita"))}>
+                {
+                    this.state.isDialogOpen === Status.Prompt ?
+                        <Dialog onCloseDialog={() => {
+                            this.setState({
+                                dialogText: null,
+                                dialogValue: null,
+                                dialogCallback: null,
+                                isDialogOpen: Status.Closed
+                            } as any);
+                        }}>
+                            <p>{ this.state.dialogText }</p>
+                            
+                            <input
+                                value={this.state.dialogValue}
+                                onChange={ev => {
+                                    this.setState({ dialogValue: ev.target.value } as any);
+                                }}
+                            />
+
+                            <button onClick={() => {
+                                this.state.dialogCallback(this.state.dialogValue);
+                                this.setState({
+                                    dialogText: null,
+                                    dialogValue: null,
+                                    dialogCallback: null,
+                                    isDialogOpen: Status.Closed
+                                } as any);
+                            }}>
+                                Criar
+                            </button>
+                        </Dialog>
+                    : this.state.isDialogOpen === Status.Confirm ?
+                    <Dialog onCloseDialog={() => {
+                            this.setState({
+                                dialogText: null,
+                                dialogValue: null,
+                                dialogCallback: null,
+                                isDialogOpen: Status.Closed
+                            } as any);
+                        }}>
+                            <p>{ this.state.dialogText }</p>
+                            
+                            <input
+                                value={this.state.dialogValue}
+                                onChange={ev => {
+                                    this.setState({ dialogValue: ev.target.value } as any);
+                                }}
+                            />
+
+                            <button onClick={() => {
+                                this.state.dialogCallback(this.state.dialogValue);
+                                this.setState({
+                                    dialogText: null,
+                                    dialogValue: null,
+                                    dialogCallback: null,
+                                    isDialogOpen: Status.Closed
+                                } as any);
+                            }}>
+                                Sim
+                            </button>
+                        </Dialog>
+                    : null
+                }
+
+                <p>Here is what you can do</p>
+                <Button onClick={() => this.prompt("Digite a tarefa a ser feita", this.onCreateTask.bind(this))}>
                     Create task
-                </button>
+                </Button>
 
-                <button onClick={this.deleteAllTasks.bind(this)}>
+                <Button onClick={this.deleteAllTasks.bind(this)}>
                     Delete all tasks
-                </button>
+                </Button>
 
-                <button onClick={this.checkAllTasks.bind(this, true)}>
+                <Button onClick={this.checkAllTasks.bind(this, true)}>
                     Check all tasks
-                </button>
+                </Button>
 
-                <button onClick={this.checkAllTasks.bind(this, false)}>
+                <Button onClick={this.checkAllTasks.bind(this, false)}>
                     Uncheck allTasks
-                </button>
+                </Button>
 
                 <ul>
                     { this.state.tasks.map((task, i) => (
@@ -96,9 +191,9 @@ export default class App extends React.Component<Props, State> {
 
                             &nbsp;
                             
-                            <button onClick={this.deleteTask.bind(this, i)}>
+                            <Button onClick={this.deleteTask.bind(this, i)}>
                                 Delete task
-                            </button>
+                            </Button>
                         </li>
                         
                     )) }

@@ -1,0 +1,26 @@
+.dialogWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    background-color: rgba(black, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .dialog {
+        background-color: white;
+        padding: 8pt;
+        border-radius: 4pt;
+        overflow: hidden;
+        position: relative;
+
+        .closeButton {
+            position: absolute;
+            right: -4pt;
+            top: -4pt;
+        }
+    }
+}
