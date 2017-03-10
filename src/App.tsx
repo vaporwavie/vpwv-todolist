@@ -1,6 +1,7 @@
 import * as React from "react";
 import Button from "./Button";
 import Dialog from "./Dialog";
+import Table from "./Table";
 
 enum Status {
     Closed,
@@ -11,7 +12,9 @@ enum Status {
 
 export interface Task {
     text: string;
+    dueTo?: Date;
     done: boolean;
+    createdAt: Date;
 }
 
 interface State {
@@ -35,6 +38,15 @@ export default class App extends React.Component<Props, State> {
         isDialogOpen: Status.Closed,
     };
 
+    textDialog(dialogText: string, dialogCallback: (v: string) => any ) {
+        this.setState({
+            dialogText,
+            dialogCallback,
+            dialogValue: "",
+            isDialogOpen: Status.Prompt
+        } as any );
+    }
+
     prompt(dialogText: string, dialogCallback: (v: string) => any) {
         this.setState({
             dialogText,
@@ -56,7 +68,8 @@ export default class App extends React.Component<Props, State> {
         this.setState({
             tasks: (this.state.tasks || []).concat({
                 text,
-                done: false
+                done: false,
+                createdAt: new Date()
             })
         });
     }
@@ -68,6 +81,7 @@ export default class App extends React.Component<Props, State> {
                     return {
                         text: task.text,
                         done: !task.done,
+                        createdAt: task.createdAt,
                     };
                 }
 
@@ -81,6 +95,7 @@ export default class App extends React.Component<Props, State> {
             tasks: this.state.tasks.map((task) => ({
                 done: done,
                 text: task.text,
+                createdAt: task.createdAt,
             }))
         });
     }
@@ -122,6 +137,7 @@ export default class App extends React.Component<Props, State> {
                                     this.setState({ dialogValue: ev.target.value } as any);
                                 }}
                             />
+                            
 
                             <button onClick={() => {
                                 this.state.dialogCallback(this.state.dialogValue);
@@ -165,26 +181,57 @@ export default class App extends React.Component<Props, State> {
                     Uncheck all tasks
                 </Button>
 
-                <ul>
-                    { this.state.tasks.map((task, i) => (
-                        <li key={i}>
-                            <input
-                                type="checkbox"
-                                checked={task.done}
-                                onChange={this.toggleTask.bind(this, i)}
-                            />
-                            
-                            &nbsp;{task.text}
+                <Table
+                    columns={[
+                        {
+                            label: "Concluída"
+                        },
+                        {
+                            label: "Tarefa"
+                        },
+                        {
+                            label: "Criada em"
+                        },
+                        {
+                            label: "Prazo"
+                        },
+                        {
+                            label: "Ações"
+                        },
+                    ]}
 
-                            &nbsp;
-                            
-                            <Button onClick={() => this.confirm("Do you really want to delete this task?", this.deleteTask.bind(this, i))}>
-                                Delete task
-                            </Button>
-                        </li>
-                        
-                    )) }
-                </ul>
+                    rows={
+                        this.state.tasks.map((task, i) => (
+                            [
+                                {
+                                    label: <input
+                                        type="checkbox"
+                                        checked={task.done}
+                                        onChange={this.toggleTask.bind(this, i)}
+                                    />
+                                },
+                                {
+                                    label: task.text
+                                },
+                                {
+                                    label: task.createdAt.toString()
+                                },
+                                {
+                                    label: (task.dueTo ? task.dueTo.toString() : "")
+                                },
+                                {
+                                    label: (
+                                        <Button
+                                            onClick={() => this.confirm("Do you really want to delete this task?", this.deleteTask.bind(this, i))}
+                                        >
+                                            Delete task
+                                        </Button>
+                                    )
+                                }
+                            ]
+                        ))
+                    }
+                />
             </div>
         );
     }
