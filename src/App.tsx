@@ -1,8 +1,14 @@
 import * as React from "react";
+import * as moment from "moment";
+import * as Datetime from 'react-datetime';
 import Button from "./Button";
 import Dialog from "./Dialog";
 import Table from "./Table";
 import Search from "./Search";
+
+require('react-datetime');
+
+let date = new Date();
 
 enum Status {
     Closed,
@@ -20,6 +26,7 @@ export interface Task {
 
 interface State {
     tasks: Task[];
+    deadline: Date;
     dialogText: string;
     searchText: string;
     dialogValue: string;
@@ -34,6 +41,7 @@ interface Props {
 export default class App extends React.Component<Props, State> {
     state: State = {
         tasks: [],
+        deadline: null,
         dialogText: null,
         searchText: null,
         dialogValue: null,
@@ -129,6 +137,8 @@ export default class App extends React.Component<Props, State> {
         })
     }
 
+
+
     render() {
         return (
             <div>
@@ -137,15 +147,20 @@ export default class App extends React.Component<Props, State> {
                 {
                     this.state.isDialogOpen === Status.Prompt ?
                         <Dialog onCloseDialog={this.closeDialog.bind(this)}>
-                            <p>{ this.state.dialogText }</p>
-                            
+                            <p>{ this.state.dialogText }</p>                            
+
                             <input
-                                value={this.state.dialogValue}
-                                onChange={ev => {
-                                    this.setState({ dialogValue: ev.target.value } as any);
+                            value={this.state.dialogValue}
+                            onChange={ev => {
+                                this.setState({ dialogValue: ev.target.value } as any);
                                 }}
                             />
 
+                            <br />
+
+                            Deadline: <Datetime />
+                            {console.log(Datetime)}
+                            
                             <button onClick={() => {
                                 this.state.dialogCallback(this.state.dialogValue);
                                 this.closeDialog();
@@ -170,7 +185,7 @@ export default class App extends React.Component<Props, State> {
                         </Dialog>
                     : null
                 }
-
+                
                 <Search onChange={this.onSearch.bind(this)}/>
 
                 <Button onClick={() => this.prompt("Insert a task", this.onCreateTask.bind(this))}>
@@ -192,19 +207,19 @@ export default class App extends React.Component<Props, State> {
                 <Table
                     columns={[
                         {
-                            label: "Concluída"
+                            label: "Finished"
                         },
                         {
-                            label: "Tarefa"
+                            label: "Task"
                         },
                         {
-                            label: "Criada em"
+                            label: "Created at"
                         },
                         {
-                            label: "Prazo"
+                            label: "Deadline"
                         },
                         {
-                            label: "Ações"
+                            label: "Actions"
                         },
                     ]}
 
