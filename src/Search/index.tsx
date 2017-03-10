@@ -15,7 +15,7 @@ export default class Search extends React.Component<Props, {}> {
 
         return (
             <div>
-                <label htmlFor="searchTask">Search a task</label>
+                <label>Search a task: </label>
                 <input onChange={this.onChange.bind(this)}/>
             </div>
         );
