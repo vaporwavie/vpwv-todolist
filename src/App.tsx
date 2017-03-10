@@ -2,6 +2,7 @@ import * as React from "react";
 import Button from "./Button";
 import Dialog from "./Dialog";
 import Table from "./Table";
+import Search from "./Search";
 
 enum Status {
     Closed,
@@ -20,6 +21,7 @@ export interface Task {
 interface State {
     tasks: Task[];
     dialogText: string;
+    searchText: string;
     dialogValue: string;
     isDialogOpen: Status;
     dialogCallback: (v: string) => any;
@@ -33,6 +35,7 @@ export default class App extends React.Component<Props, State> {
     state: State = {
         tasks: [],
         dialogText: null,
+        searchText: null,
         dialogValue: null,
         dialogCallback: null,
         isDialogOpen: Status.Closed,
@@ -120,11 +123,16 @@ export default class App extends React.Component<Props, State> {
         } as any);
     }
 
+    onSearch(inputText: string) {
+        this.setState({
+            searchText: inputText
+        })
+    }
+
     render() {
         return (
             <div>
                 <h2>{this.props.username}'s A E S T H E T I C S todolist</h2>
-                <h4>Totally</h4>
 
                 {
                     this.state.isDialogOpen === Status.Prompt ?
@@ -137,7 +145,6 @@ export default class App extends React.Component<Props, State> {
                                     this.setState({ dialogValue: ev.target.value } as any);
                                 }}
                             />
-                            
 
                             <button onClick={() => {
                                 this.state.dialogCallback(this.state.dialogValue);
@@ -164,7 +171,8 @@ export default class App extends React.Component<Props, State> {
                     : null
                 }
 
-                <p>Here is what you can do</p>
+                <Search onChange={this.onSearch.bind(this)}/>
+
                 <Button onClick={() => this.prompt("Insert a task", this.onCreateTask.bind(this))}>
                     Create a task
                 </Button>
@@ -201,7 +209,11 @@ export default class App extends React.Component<Props, State> {
                     ]}
 
                     rows={
-                        this.state.tasks.map((task, i) => (
+                        this.state.tasks.filter(task => {
+                            const searchText = this.state.searchText;
+                            if (searchText === "" || searchText === null) return true;
+                            return task.text.indexOf(searchText) !== -1;
+                        }).map((task, i) => (
                             [
                                 {
                                     label: <input
