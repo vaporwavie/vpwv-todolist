@@ -6,7 +6,7 @@ want, but I warn you since now that the whole thing is pretty much looking like 
 Believe me, it's very simple! Follow these steps:
 
 * Clone this repo
-* I strongly recommend you to use <code>yarn</code> in order to install de packages instead of <code>npm install</code>. Buuut, you choose.
+* I strongly recommend you to use <code>yarn</code> in order to install the packages instead of <code>npm install</code>. Buuut, you choose.
 * <code>npm install -g webpack-dev-server && npm install</code> or <code>yarn && yarn add webpack-web-server global</code>
 * Execute it by typing <code>webpack-dev-server</code> at your terminal. Localhost will probably be at port 8080.
 
