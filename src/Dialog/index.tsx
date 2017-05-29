@@ -15,8 +15,7 @@ export default class Dialog extends React.Component<Props, {}> {
                 <div className={s.dialog} onClick={ev => ev.stopPropagation()}>
                     <div className={s.closeButton} onClick={this.props.onCloseDialog}>
                         &times;
-                    </div>
-                    
+                    </div>    
                     { this.props.children }
                 </div>
             </div>
