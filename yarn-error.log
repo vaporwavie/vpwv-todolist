@@ -1,0 +1,66 @@
+Arguments: 
+  /usr/bin/node /home/vaporwavie/.linuxbrew/bin/yarn add webpack-web-server global
+
+PATH: 
+  /home/vaporwavie/.linuxbrew/bin:/home/vaporwavie/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/vaporwavie/Android/tools/:/home/vaporwavie/Android/platform-tools/:/home/vaporwavie/Android/tools/bin/
+
+Yarn version: 
+  1.7.0
+
+Node version: 
+  8.11.4
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/webpack-web-server: Not found
+      at Request.params.callback [as _callback] (/home/vaporwavie/.linuxbrew/lib/node_modules/yarn/lib/cli.js:65656:18)
+      at Request.self.callback (/home/vaporwavie/.linuxbrew/lib/node_modules/yarn/lib/cli.js:134675:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (/home/vaporwavie/.linuxbrew/lib/node_modules/yarn/lib/cli.js:135658:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (/home/vaporwavie/.linuxbrew/lib/node_modules/yarn/lib/cli.js:135578:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
+
+npm manifest: 
+  {
+    "dependencies": {
+      "@types/node": "^7.0.5",
+      "@types/react": "^15.0.14",
+      "@types/react-datepicker": "^0.40.0",
+      "@types/react-dom": "^0.14.23",
+      "awesome-typescript-loader": "^3.0.8",
+      "babel-core": "^6.23.1",
+      "babel-loader": "^6.3.2",
+      "babel-plugin-transform-runtime": "^6.23.0",
+      "babel-preset-es2015": "^6.22.0",
+      "babel-preset-react": "^6.23.0",
+      "create-react-app": "^1.2.1",
+      "css-loader": "^0.26.2",
+      "moment": "^2.17.1",
+      "node-sass": "^4.5.0",
+      "react": "^15.4.2",
+      "react-bootstrap": "save",
+      "react-cli": "^0.3.1",
+      "react-datepicker": "^0.41.1",
+      "react-datetime": "^2.8.8",
+      "react-dom": "^15.4.2",
+      "react-markdown": "^2.4.5",
+      "sass-loader": "^6.0.2",
+      "style-loader": "^0.13.2",
+      "typescript": "^2.2.1",
+      "webpack": "^2.2.1",
+      "webpack-combine-loaders": "^2.0.3",
+      "webpack-dev-server": "^2.4.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

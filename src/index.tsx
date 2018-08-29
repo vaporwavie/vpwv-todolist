@@ -3,6 +3,6 @@ import * as ReactDOM from "react-dom";
 import App from "./App";
 
 ReactDOM.render(
-    <App username="vaporwavie"/>,
+    <App username="vaporwavie" />,
     document.getElementById("root")
 );

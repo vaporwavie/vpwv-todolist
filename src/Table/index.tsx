@@ -25,7 +25,7 @@ export default class Table extends React.Component<Props, State> {
     state: State = {
         sortedColumnIndex: -1
     };
-    
+
     render() {
         return (
             <table>
@@ -34,7 +34,7 @@ export default class Table extends React.Component<Props, State> {
                         {
                             this.props.columns.map((col, i) => (
                                 <th key={i}>
-                                    { col.label }
+                                    {col.label}
                                     {
                                         // incluir 'botão' pra quando clicar, ordenar a tabela de acordo com essa coluna
                                     }
@@ -43,7 +43,7 @@ export default class Table extends React.Component<Props, State> {
                         }
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     {
                         this.props.rows.map((row, i) => (
@@ -51,7 +51,7 @@ export default class Table extends React.Component<Props, State> {
                                 {
                                     row.map((cell, j) => (
                                         <td key={j}>
-                                            { cell.label }
+                                            {cell.label}
                                         </td>
                                     ))
                                 }

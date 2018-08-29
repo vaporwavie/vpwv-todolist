@@ -49,13 +49,13 @@ export default class App extends React.Component<Props, State> {
         isDialogOpen: Status.Closed,
     };
 
-    textDialog(dialogText: string, dialogCallback: (v: string) => any ) {
+    textDialog(dialogText: string, dialogCallback: (v: string) => any) {
         this.setState({
             dialogText,
             dialogCallback,
             dialogValue: "",
             isDialogOpen: Status.Prompt
-        } as any );
+        } as any);
     }
 
     prompt(dialogText: string, dialogCallback: (v: string) => any) {
@@ -147,12 +147,12 @@ export default class App extends React.Component<Props, State> {
                 {
                     this.state.isDialogOpen === Status.Prompt ?
                         <Dialog onCloseDialog={this.closeDialog.bind(this)}>
-                            <p>{ this.state.dialogText }</p>                            
+                            <p>{this.state.dialogText}</p>
 
                             <input
-                            value={this.state.dialogValue}
-                            onChange={ev => {
-                                this.setState({ dialogValue: ev.target.value } as any);
+                                value={this.state.dialogValue}
+                                onChange={ev => {
+                                    this.setState({ dialogValue: ev.target.value } as any);
                                 }}
                             />
 
@@ -160,7 +160,7 @@ export default class App extends React.Component<Props, State> {
 
                             Deadline: <Datetime />
                             {console.log(Datetime)}
-                            
+
                             <button onClick={() => {
                                 this.state.dialogCallback(this.state.dialogValue);
                                 this.closeDialog();
@@ -168,25 +168,25 @@ export default class App extends React.Component<Props, State> {
                                 Create task
                             </button>
                         </Dialog>
-                    : this.state.isDialogOpen === Status.Confirm ?
-                    <Dialog onCloseDialog={this.closeDialog.bind(this)}>
-                            <p>{ this.state.dialogText }</p>
-                            <button onClick={() => {
-                                this.state.dialogCallback(this.state.dialogValue);
-                                this.closeDialog();
-                            }}>
-                                Yes, delete this task
+                        : this.state.isDialogOpen === Status.Confirm ?
+                            <Dialog onCloseDialog={this.closeDialog.bind(this)}>
+                                <p>{this.state.dialogText}</p>
+                                <button onClick={() => {
+                                    this.state.dialogCallback(this.state.dialogValue);
+                                    this.closeDialog();
+                                }}>
+                                    Yes, delete this task
                             </button>
-                            <button onClick={() => {
-                                this.closeDialog();
-                            }}>
-                                No, sorry
+                                <button onClick={() => {
+                                    this.closeDialog();
+                                }}>
+                                    No, sorry
                             </button>
-                        </Dialog>
-                    : null
+                            </Dialog>
+                            : null
                 }
-                
-                <Search onChange={this.onSearch.bind(this)}/>
+
+                <Search onChange={this.onSearch.bind(this)} />
 
                 <Button onClick={() => this.prompt("Insert a task", this.onCreateTask.bind(this))}>
                     Create a task
